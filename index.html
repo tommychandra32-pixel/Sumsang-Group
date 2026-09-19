@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sumsang</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%9D%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F1FF;
+    --paper-alt: #FFFFFF;
+    --ink: #241F3D;
+    --ink-soft: #524C6E;
+    --coral: #FF6F59;
+    --sunny: #FFC857;
+    --teal: #2AB7A9;
+    --pink: #FF8FAB;
+    --radius-card: 18px;
+    --max-w: 880px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .display {
+    font-family: 'Baloo 2', 'Segoe UI', sans-serif;
+    font-weight: 800;
+  }
+
+  img, svg { max-width: 100%; }
+
+  .wrap {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 88px 24px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-doodles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+
+  .hero-doodles span {
+    position: absolute;
+    font-size: 28px;
+  }
+  .hero-doodles span:nth-child(1) { top: 12%; left: 8%; transform: rotate(-12deg); }
+  .hero-doodles span:nth-child(2) { top: 18%; right: 10%; transform: rotate(10deg); }
+  .hero-doodles span:nth-child(3) { bottom: 12%; left: 14%; transform: rotate(8deg); font-size: 22px; }
+  .hero-doodles span:nth-child(4) { bottom: 20%; right: 16%; transform: rotate(-8deg); font-size: 22px; }
+
+  .wordmark {
+    font-size: clamp(3rem, 11vw, 6rem);
+    line-height: 1;
+    margin: 0;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    animation: rise 0.7s ease-out forwards;
+  }
+
+  .wordmark .accent { color: var(--coral); }
+
+  .underline-squiggle {
+    display: block;
+    width: min(320px, 70vw);
+    height: 22px;
+    margin: 6px auto 0;
+    opacity: 0;
+    animation: rise 0.7s ease-out 0.15s forwards;
+  }
+
+  .tagline {
+    margin: 22px auto 0;
+    max-width: 46ch;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    opacity: 0;
+    animation: rise 0.7s ease-out 0.3s forwards;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wordmark, .underline-squiggle, .tagline { animation: none; opacity: 1; }
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about {
+    padding: 8px 24px 72px;
+    text-align: center;
+  }
+  .about p {
+    max-width: 62ch;
+    margin: 0 auto;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- MEMBERS ---------- */
+  .members { padding: 24px 24px 80px; }
+
+  .members-head { text-align: center; margin-bottom: 8px; }
+  .members-head h2 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: 0 0 8px;
+  }
+  .members-head p {
+    color: var(--ink-soft);
+    margin: 0 0 44px;
+    font-size: 0.98rem;
+  }
+
+  .card-grid {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 40px 28px;
+  }
+
+  .card {
+    background: var(--paper-alt);
+    border-radius: var(--radius-card);
+    padding: 28px 24px 24px;
+    position: relative;
+    box-shadow: 0 14px 30px -18px rgba(36, 31, 61, 0.35);
+  }
+
+  .card:nth-child(4n+1) { transform: rotate(-1.6deg); }
+  .card:nth-child(4n+2) { transform: rotate(1.2deg); }
+  .card:nth-child(4n+3) { transform: rotate(1.8deg); }
+  .card:nth-child(4n+4) { transform: rotate(-1deg); }
+
+  .tape {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    width: 78px;
+    height: 26px;
+    transform: translateX(-50%) rotate(-3deg);
+    opacity: 0.85;
+    border-radius: 2px;
+  }
+  .card:nth-child(4n+1) .tape { background: var(--coral); }
+  .card:nth-child(4n+2) .tape { background: var(--teal); }
+  .card:nth-child(4n+3) .tape { background: var(--sunny); }
+  .card:nth-child(4n+4) .tape { background: var(--pink); }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--paper-alt);
+    margin: 6px auto 14px;
+  }
+  .avatar {
+    overflow: hidden;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .card:nth-child(4n+1) .avatar { background: var(--coral); }
+  .card:nth-child(4n+2) .avatar { background: var(--teal); }
+  .card:nth-child(4n+3) .avatar { background: var(--sunny); color: var(--ink); }
+  .card:nth-child(4n+4) .avatar { background: var(--pink); }
+
+  .card-name {
+    text-align: center;
+    font-size: 1.25rem;
+    margin: 0 0 4px;
+  }
+
+  .role-pill {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 18px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--paper-alt);
+  }
+  .card:nth-child(4n+1) .role-pill { background: var(--coral); }
+  .card:nth-child(4n+2) .role-pill { background: var(--teal); }
+  .card:nth-child(4n+3) .role-pill { background: var(--sunny); color: var(--ink); }
+  .card:nth-child(4n+4) .role-pill { background: var(--pink); }
+
+  .quote {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    background: var(--paper);
+    border-radius: 12px;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  .quote span {
+    display: block;
+    margin-top: 6px;
+    font-style: normal;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+
+  .fun-fact {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .fun-fact strong { color: var(--ink); }
+
+  .members-note {
+    text-align: center;
+    max-width: 50ch;
+    margin: 48px auto 0;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- CLOSING ---------- */
+  .closing {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 76px 24px;
+    text-align: center;
+  }
+  .closing p {
+    max-width: 56ch;
+    margin: 0 auto 28px;
+    font-size: 1.08rem;
+    color: #D9D5EE;
+  }
+  .closing .sign {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    color: var(--sunny);
+    margin: 0;
+  }
+
+  footer {
+    text-align: center;
+    padding: 28px 24px 40px;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- HONORARY MEMBERS ---------- */
+  .honorary { padding: 24px 24px 80px; }
+  .honorary-head { text-align: center; margin-bottom: 36px; }
+  .honorary-head h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 0 0 8px; }
+  .honorary-head p { color: var(--ink-soft); margin: 0; }
+  .honor-card {
+    background: var(--paper-alt);
+    border-radius: var(--radius-card);
+    padding: 28px 24px 24px;
+    position: relative;
+    box-shadow: 0 14px 30px -18px rgba(36, 31, 61, 0.35);
+    border: 2px dashed var(--sunny);
+  }
+  .honor-card .tape { background: var(--sunny); }
+  .honor-card .avatar { background: var(--sunny); color: var(--ink); }
+  .honor-pill {
+    display: block; width: fit-content; margin: 0 auto 18px;
+    padding: 5px 14px; border-radius: 999px;
+    font-size: 0.82rem; font-weight: 600;
+    background: var(--sunny); color: var(--ink);
+  }
+
+
+    /* ---------- HERO PHOTO BACKGROUND + SCROLL FADE ---------- */
+    .hero {
+      --hero-opacity: 1;
+      --hero-scale: 1;
+      isolation: isolate;
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(245, 241, 255, 0.12) 0%,
+          rgba(245, 241, 255, 0.35) 55%,
+          rgba(245, 241, 255, 1) 100%
+        ),
+        url("foto/hero.jpg") center top / cover no-repeat;
+      opacity: var(--hero-opacity);
+      transform: scale(var(--hero-scale));
+      transform-origin: center top;
+      will-change: opacity, transform;
+      transition: opacity 0.05s linear;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: rgba(245, 241, 255, 0.38);
+      pointer-events: none;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        min-height: 620px;
+      }
+
+      .hero::before {
+        background-position: center top;
+      }
+    }
+
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero-doodles" aria-hidden="true">
+      <span>✌️</span><span>💬</span><span>☕</span><span>😄</span>
+    </div>
+    <h1 class="wordmark display">Sum<span class="accent">sang</span></h1>
+    <svg class="underline-squiggle" viewBox="0 0 320 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M4 14C40 2 70 22 106 12C142 2 172 22 208 12C244 2 274 20 316 10" stroke="#FF6F59" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+    <p class="tagline">Kumpulan orang random yang somehow masih betah satu circle sampai sekarang.</p>
+  </section>
+
+  <section class="about wrap">
+    <p>Berawal dari wepet gang yang berubah jadi sumsang, awal grub cuma ada caca & lainnya</p>
+  </section>
+
+  <section class="members">
+    <div class="members-head">
+      <h2 class="display">Kenalan sama member Sumsang</h2>
+      <p>Ini dia nih</p>
+    </div>
+
+    <div class="card-grid">
+
+      <!-- Member 1 -->
+      <div class="card">
+        <div class="tape"></div>
+        <div class="avatar"><img src="foto/m1.jpg" alt="Foto member 1"></div>
+        <h3 class="card-name display">Tommy</h3>
+        <span class="role-pill">pawang pubg mobile</span>
+        <blockquote class="quote">
+          "Pubg Yok"
+          <span>— Ini orang ngajak mabar mulu dah</span>
+        </blockquote>
+        <p class="fun-fact"><strong>Fun fact:</strong> I like tomboys</p>
+      </div>
+
+      <!-- Member 2 -->
+      <div class="card">
+        <div class="tape"></div>
+        <div class="avatar"><img src="foto/m2.jpg" alt="Foto member 2"></div>
+        <h3 class="card-name display">Adriansyah</h3>
+        <span class="role-pill">Si Wacana</span>
+        <blockquote class="quote">
+          "Besok gas main."
+          <span>— dibaliknya perkumpulan sumsang disitu ada iyan</span>
+        </blockquote>
+        <p class="fun-fact"><strong>Fun fact:</strong> wong kalahan</p>
+      </div>
+
+      <!-- Member 3 -->
+      <div class="card">
+        <div class="tape"></div>
+        <div class="avatar"><img src="foto/m3.jpg" alt="Foto member 3"></div>
+        <h3 class="card-name display">Fadel</h3>
+        <span class="role-pill">Pemilik rumah kalo ngumpul</span>
+        <blockquote class="quote">
+          "pada ngaret dah"
+          <span>— si anime</span>
+        </blockquote>
+        <p class="fun-fact"><strong>Fun fact:</strong> Celananya sama bajunya ngetat bisa jadi korban pelecehan</p>
+      </div>
+
+      <!-- Member 4 -->
+      <!-- Member 5 -->
+      <div class="card">
+  <div class="tape"></div>
+  <div class="avatar"><img src="foto/m4.jpg" alt="Foto member 4"></div>
+  <h3 class="card-name display">Iki (Rizky)</h3>
+  <span class="role-pill">Nonchalant</span>
+  <blockquote class="quote">
+    "Gw ngantuk yan"
+    <span>— dia disamper padahal mau tidur</span>
+  </blockquote>
+  <p class="fun-fact"><strong>Fun fact:</strong> suka mommy asmr</p>
+</div>
+
+<div class="card">
+  <div class="tape"></div>
+  <div class="avatar"><img src="foto/m5.jpg" alt="Foto member 5"></div>
+  <h3 class="card-name display">Fadil</h3>
+  <span class="role-pill">Anak emas sumsang</span>
+  <blockquote class="quote">
+    "Gw ikut / gw gak ikut"
+    <span>— jawaban template buat semua keputusan hidup</span>
+  </blockquote>
+  <p class="fun-fact"><strong>Fun fact:</strong> Chill guy</p>
+</div>
+
+<div class="card">
+  <div class="tape"></div>
+  <div class="avatar"><img src="foto/m6.jpg" alt="Foto member 6"></div>
+  <h3 class="card-name display">Akbar</h3>
+  <span class="role-pill">The real teman yang mau diajak kemana aja</span>
+  <blockquote class="quote">
+    "Ayo gas dah"
+    <span>— lu ikut gua ikut</span>
+  </blockquote>
+  <p class="fun-fact"><strong>Fun fact:</strong> Chill guy like fadil</p>
+</div>
+
+<div class="card">
+  <div class="tape"></div>
+  <div class="avatar"><img src="foto/m7.jpg" alt="Foto member 7"></div>
+  <h3 class="card-name display">Elang</h3>
+  <span class="role-pill">Donatur</span>
+  <blockquote class="quote">
+    "Prime elang"
+    <span>— favorit semua orang</span>
+  </blockquote>
+  <p class="fun-fact"><strong>Fun fact:</strong> Like Korean idol but they like you?</p>
+</div>
+
+<div class="card">
+  <div class="tape"></div>
+  <div class="avatar"><img src="foto/m8.jpg" alt="Foto member 8"></div>
+  <h3 class="card-name display">Deril</h3>
+  <span class="role-pill">Orang baik dan keren</span>
+  <blockquote class="quote">
+    "Gas"
+    <span>— padahal gamau tuh</span>
+  </blockquote>
+  <p class="fun-fact"><strong>Fun fact:</strong> Anjay udah imo elang kapan</p>
+</div>
+
+<div class="card">
+  <div class="tape"></div>
+  <div class="avatar"><img src="foto/m9.jpg" alt="Foto member 9"></div>
+  <h3 class="card-name display">Dika</h3>
+  <span class="role-pill">Adeknya deril</span>
+  <blockquote class="quote">
+    "Cuy"
+    <span>— Dika november 2025</span>
+  </blockquote>
+  <p class="fun-fact"><strong>Fun fact:</strong> Jagonya em el</p>
+</div>
+
+<div class="card">
+  <div class="tape"></div>
+  <div class="avatar"><img src="foto/m10.jpg" alt="Foto member 10"></div>
+  <h3 class="card-name display">Firman</h3>
+  <span class="role-pill">Ustadz</span>
+  <blockquote class="quote">
+    "mana akun pubg gua tom"
+    <span>— minta gitu tapi gamain gamenya</span>
+  </blockquote>
+  <p class="fun-fact"><strong>Fun fact:</strong> Ustadz kita semua inimah</p>
+</div>
+
+      <!--
+        Butuh nambah member? Copy salah satu blok <div class="card">...</div> di atas,
+        tempel di bawahnya, lalu ganti isinya. Warna tape & pill bakal otomatis
+        mengikuti urutan card ke-1/2/3/4 (kalau lebih dari 4, tinggal tambah aturan
+        CSS :nth-child(5), :nth-child(6) dst. di bagian .tape / .avatar / .role-pill).
+      -->
+    </div>
+
+    <p class="members-note">Itu dia 10 member sumsangs yagesya.</p>
+  </section>
+
+  <!-- ---------- HONORARY MEMBERS ---------- -->
+  <section class="honorary">
+    <div class="honorary-head">
+      <h2 class="display">Our OG</h2>
+      <p>Orang yang pernah aktif di sumsang tapi sekarang entah kemana</p>
+    </div>
+    <div class="card-grid">
+      <div class="honor-card">
+        <div class="tape"></div>
+        <div class="avatar"><img src="foto/og-caca.jpg" alt="Foto Caca Nugraha"></div>
+        <h3 class="card-name display">Caca Nugraha</h3>
+        <span class="honor-pill">Honorary Member</span>
+        <blockquote class="quote">
+          "Eh di folder lu kok ada video.."
+          <span>— We will remember</span>
+        </blockquote>
+        <p class="fun-fact"><strong>Honor:</strong> Our only OG Caca, makasih udah exist di dunia ini dan dampak besar ke grub sumsang</p>
+      </div>
+  </section>
+
+  <section class="closing">
+    <p>Buat Sumsang, persahabatan itu simpel: nggak harus selalu ketemu atau satu circle sepanjang waktu, yang penting pas dipanggil selalu ada, walaupun jawabannya "otw" dan nyatanya masih rebahan. Kita bukan geng yang sempurna, tapi kita geng yang jujur, rusuh, dan setia dengan cara sendiri. Semoga circle ini nggak cuma tahan sampai lulus, tapi sampai reunian bawa anak masing-masing.</p>
+    <p class="sign display">Sumsang, thank you udah exist di dunia ini.</p>
+  </section>
+
+  <footer>made with rame-rame oleh anak-anak Sumsang</footer>
+
+
+<script>
+  // Background hero semakin transparan ketika halaman di-scroll.
+  (() => {
+    const hero = document.querySelector(".hero");
+    if (!hero) return;
+
+    let ticking = false;
+
+    function updateHero() {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const heroHeight = hero.offsetHeight;
+
+      // Mulai memudar sejak scroll 0 sampai sekitar 70% tinggi hero.
+      const fadeDistance = heroHeight * 0.7;
+      const progress = Math.min(Math.max(scrollY / fadeDistance, 0), 1);
+
+      // Opacity: 1 -> 0
+      const opacity = 1 - progress;
+
+      // Sedikit zoom-out saat menghilang supaya terasa lebih smooth.
+      const scale = 1 + progress * 0.04;
+
+      hero.style.setProperty("--hero-opacity", opacity.toFixed(3));
+      hero.style.setProperty("--hero-scale", scale.toFixed(3));
+
+      ticking = false;
+    }
+
+    function requestUpdate() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHero);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    updateHero();
+  })();
+</script>
+
+</body>
+</html>
